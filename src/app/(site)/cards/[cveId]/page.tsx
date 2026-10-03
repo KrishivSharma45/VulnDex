@@ -56,6 +56,12 @@ export default async function CardPage({params}: PageProps<'/cards/[cveId]'>) {
               <RarityBadge rarity={card.rarity} />
               <SetLabel set={card.set} />
             </div>
+            <Link
+              href={`/battle?a=${card.cveId}`}
+              className="mt-5 inline-flex items-center gap-2 rounded-lg border border-terminal/50 px-4 py-2 font-mono text-sm text-terminal hover:bg-terminal/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terminal"
+            >
+              ⚔ battle this card
+            </Link>
           </header>
 
           <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/5 bg-white/5 font-mono sm:grid-cols-4">

@@ -9,11 +9,14 @@ export default function SiteLayout({children}: LayoutProps<'/'>) {
             <span className="text-terminal">&gt;_</span> vulndex
           </Link>
           <div className="flex items-center gap-1 font-mono text-sm">
-            <Link href="/" className="rounded px-3 py-1.5 text-zinc-400 hover:bg-white/5 hover:text-zinc-100">
+            <Link href="/" className="rounded px-2 py-1.5 text-zinc-400 sm:px-3 hover:bg-white/5 hover:text-zinc-100">
               ~/home
             </Link>
-            <Link href="/cards" className="rounded px-3 py-1.5 text-zinc-400 hover:bg-white/5 hover:text-zinc-100">
+            <Link href="/cards" className="rounded px-2 py-1.5 text-zinc-400 sm:px-3 hover:bg-white/5 hover:text-zinc-100">
               ~/cards
+            </Link>
+            <Link href="/battle" className="rounded px-2 py-1.5 text-zinc-400 sm:px-3 hover:bg-white/5 hover:text-zinc-100">
+              ~/battle
             </Link>
           </div>
         </nav>
