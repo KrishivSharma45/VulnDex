@@ -1,0 +1,29 @@
+@import 'tailwindcss';
+
+/* Same terminal palette as the public VulnDex site. */
+@theme {
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+  --color-ink: #05070a;
+  --color-panel: #0b1015;
+  --color-terminal: #3dff8f;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-ink);
+  color: var(--color-zinc-300);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+@utility bg-grid {
+  background-image:
+    linear-gradient(rgb(61 255 143 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(61 255 143 / 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+}

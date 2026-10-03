@@ -139,6 +139,7 @@ const CPE_NAMES: Record<string, string> = {
   sonicwall: 'SonicWall', eos: 'EOS', qts: 'QTS',
   netscaler_gateway: 'NetScaler Gateway', netscaler_application_delivery_controller: 'NetScaler ADC',
   moveit_transfer: 'MOVEit Transfer', moveit_cloud: 'MOVEit Cloud',
+  paloaltonetworks: 'Palo Alto Networks', 'pan-os': 'PAN-OS',
 }
 
 const prettify = (s: string) =>

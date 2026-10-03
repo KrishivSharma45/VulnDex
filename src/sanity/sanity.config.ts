@@ -8,10 +8,10 @@ import {workflowDefaultDocumentNode, workflowStudioPlugin} from '@sanity/workflo
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 
-import {apiVersion, dataset, projectId} from './src/sanity/env'
-import {schemaTypes} from './src/sanity/schemaTypes'
-import {CARD_REVIEW} from './src/workflows/cardReview'
-import {WORKFLOW_TAG} from './src/workflows/config'
+import {apiVersion, dataset, projectId} from './env'
+import {schemaTypes} from './schemaTypes'
+import {CARD_REVIEW} from '../workflows/cardReview'
+import {WORKFLOW_TAG} from '../workflows/config'
 
 export default defineConfig({
   name: 'vulndex',

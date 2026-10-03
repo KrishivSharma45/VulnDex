@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Card Forge is a separate App SDK project with its own toolchain.
+    "card-forge/**",
   ]),
 ]);
 
