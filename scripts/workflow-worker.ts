@@ -27,16 +27,29 @@ async function main() {
   const engine = workflowEngine('workflow-worker', cardSyncHandlers(content))
   console.log(once ? 'Draining once…' : `Workflow worker running (every ${POLL_MS / 1000}s). Ctrl+C to stop.`)
 
+  let failures = 0
   do {
-    const instanceIds = await content.fetch<string[]>(PENDING_QUERY, {instanceType: WORKFLOW_INSTANCE_TYPE, workflowTag: WORKFLOW_TAG})
-    for (const instanceId of instanceIds) {
-      const {drained, failed, lost} = await engine.drainEffects({instanceId})
-      for (const e of drained) console.log(`✓ ${e.name} on ${instanceId}`)
-      for (const e of failed) console.error(`✗ ${e.name} failed on ${instanceId}`)
-      for (const e of lost) console.warn(`~ ${e.name} lost its claim on ${instanceId}`)
+    try {
+      await drainOnce(content, engine)
+      failures = 0
+    } catch (err) {
+      // A dropped request must not kill the runtime; unclaimed effects stay queued and drain next pass.
+      if (once) throw err
+      failures += 1
+      console.warn(`! poll failed (${failures}x): ${err instanceof Error ? err.message : err}`)
     }
-    if (!once) await sleep(POLL_MS)
+    if (!once) await sleep(Math.min(POLL_MS * 2 ** failures, 60_000))
   } while (!once)
+}
+
+async function drainOnce(content: ReturnType<typeof contentClient>, engine: ReturnType<typeof workflowEngine>) {
+  const instanceIds = await content.fetch<string[]>(PENDING_QUERY, {instanceType: WORKFLOW_INSTANCE_TYPE, workflowTag: WORKFLOW_TAG})
+  for (const instanceId of instanceIds) {
+    const {drained, failed, lost} = await engine.drainEffects({instanceId})
+    for (const e of drained) console.log(`✓ ${e.name} on ${instanceId}`)
+    for (const e of failed) console.error(`✗ ${e.name} failed on ${instanceId}`)
+    for (const e of lost) console.warn(`~ ${e.name} lost its claim on ${instanceId}`)
+  }
 }
 
 main().catch((err) => {
