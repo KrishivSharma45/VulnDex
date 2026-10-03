@@ -7,12 +7,23 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "tsx --env-file=.env.local scripts/seed.ts"
+    "seed": "tsx --env-file=.env.local scripts/seed.ts",
+    "workflow:deploy": "tsx --env-file=.env.local scripts/workflow-deploy.ts",
+    "workflow:worker": "tsx --env-file=.env.local scripts/workflow-worker.ts",
+    "draft-card": "tsx --env-file=.env.local scripts/draft-card.ts"
   },
   "dependencies": {
     "@sanity/image-url": "^2.1.1",
+    "@sanity/sdk": "^3.7.0",
     "@sanity/ui": "^4.3.0",
     "@sanity/vision": "^6.17.0",
+    "@sanity/workflow-components": "^0.36.0",
+    "@sanity/workflow-diagram": "^0.36.0",
+    "@sanity/workflow-engine": "^0.36.0",
+    "@sanity/workflow-react": "^0.36.0",
+    "@sanity/workflow-sdk": "^0.36.0",
+    "@sanity/workflow-studio": "^0.36.0",
+    "@sanity/workflow-studio-plugin": "^0.36.0",
     "@tailwindcss/typography": "^0.5.20",
     "next": "16.3.8",
     "next-sanity": "^13.3.4",
@@ -33,5 +44,10 @@
     "tailwindcss": "^4",
     "tsx": "^4.23.15",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@sanity/sdk": {
+      "@sanity/mutate": "0.18.2"
+    }
   }
 }

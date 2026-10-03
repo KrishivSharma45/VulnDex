@@ -105,7 +105,48 @@ export const cveCardType = defineType({
         direction: 'horizontal',
       },
       initialValue: 'draft',
+      description:
+        'Owned by the "Card review" workflow: use its Verify / Publish / Reject actions above. Only "published" cards appear on the site.',
+      readOnly: true,
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'rejectionReason',
+      title: 'Rejection reason',
+      type: 'text',
+      rows: 2,
+      readOnly: true,
+      hidden: ({value}) => !value,
+    }),
+    defineField({
+      name: 'reviewLog',
+      title: 'Review log',
+      description: 'Who moved this card through the workflow, and when. Mirrored from the workflow audit trail.',
+      type: 'array',
+      readOnly: true,
+      hidden: ({value}) => !value?.length,
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'reviewEvent',
+          fields: [
+            defineField({name: 'action', type: 'string'}),
+            defineField({name: 'status', title: 'Status after', type: 'string'}),
+            defineField({name: 'actorName', title: 'By', type: 'string'}),
+            defineField({name: 'actorId', type: 'string'}),
+            defineField({name: 'via', type: 'string', description: 'Execution context, e.g. studio or draft-card'}),
+            defineField({name: 'reason', type: 'text', rows: 2}),
+            defineField({name: 'at', type: 'datetime'}),
+          ],
+          preview: {
+            select: {action: 'action', actorName: 'actorName', at: 'at', reason: 'reason', via: 'via'},
+            prepare: ({action, actorName, at, reason, via}) => ({
+              title: `${action ?? '?'} by ${actorName ?? 'unknown'}${via ? ` (via ${via})` : ''}`,
+              subtitle: [at && new Date(at).toLocaleString(), reason && `“${reason}”`].filter(Boolean).join(' · '),
+            }),
+          },
+        }),
+      ],
     }),
     defineField({
       name: 'set',
