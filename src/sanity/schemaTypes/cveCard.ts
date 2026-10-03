@@ -75,6 +75,14 @@ export const cveCardType = defineType({
       validation: (rule) => rule.required().min(1),
     }),
     defineField({
+      name: 'summary',
+      title: 'Official summary',
+      type: 'text',
+      rows: 4,
+      description: 'Official NVD description (set by the seed script).',
+      readOnly: true,
+    }),
+    defineField({
       name: 'story',
       type: 'array',
       of: [defineArrayMember({type: 'block'})],
