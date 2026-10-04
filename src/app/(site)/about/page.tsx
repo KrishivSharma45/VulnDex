@@ -66,7 +66,7 @@ export default async function AboutPage() {
         <ol className="mt-6 grid gap-6 md:grid-cols-3">
           {PIPELINE.map((step, i) => (
             <li key={step.title} className="animate-fade-up relative" style={{animationDelay: `${i * 100}ms`}}>
-              <span className="flex size-10 items-center justify-center rounded-full border border-neon/50 text-lg font-bold text-neon shadow-[0_0_14px_-4px_rgb(234_255_61/0.54)]">
+              <span className="flex size-10 items-center justify-center rounded-full border border-neon/50 text-lg font-bold text-neon shadow-[0_0_14px_-4px_rgb(214_227_106/0.32)]">
                 {i + 1}
               </span>
               <h3 className="mt-4 font-bold text-zinc-100">{step.title}</h3>
@@ -118,7 +118,7 @@ export default async function AboutPage() {
         <div className="flex flex-wrap justify-center gap-3">
           <Link
             href="/cards"
-            className="rounded-full bg-neon px-6 py-3 font-bold text-ink shadow-[0_0_24px_-6px_rgb(234_255_61/0.48)] transition-all hover:scale-105"
+            className="rounded-full bg-neon px-6 py-3 font-bold text-ink shadow-[0_0_24px_-6px_rgb(214_227_106/0.29)] transition-all hover:scale-105"
           >
             Browse the collection
           </Link>

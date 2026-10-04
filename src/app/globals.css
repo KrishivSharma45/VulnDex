@@ -13,7 +13,7 @@
   --color-panel-raised: #111a24;
 
   /* The one accent colour for the whole site. Change it here to re-theme everything. */
-  --color-neon: #eaff3d;
+  --color-neon: #d6e36a;
 
   --animate-neon-pulse: neon-pulse 3.2s ease-in-out infinite;
   --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -23,10 +23,10 @@
   @keyframes neon-pulse {
     0%,
     100% {
-      box-shadow: 0 0 14px -4px rgb(234 255 61 / 0.27);
+      box-shadow: 0 0 14px -4px rgb(214 227 106 / 0.16);
     }
     50% {
-      box-shadow: 0 0 32px -2px rgb(234 255 61 / 0.48);
+      box-shadow: 0 0 32px -2px rgb(214 227 106 / 0.29);
     }
   }
 
@@ -75,9 +75,9 @@ body {
 /* Neon grid behind the site, fading out towards the bottom, with a soft glow up top. */
 @utility bg-grid {
   background-image:
-    radial-gradient(900px 420px at 50% -10%, rgb(234 255 61 / 0.06), transparent 70%),
-    linear-gradient(rgb(234 255 61 / 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(234 255 61 / 0.035) 1px, transparent 1px);
+    radial-gradient(900px 420px at 50% -10%, rgb(214 227 106 / 0.04), transparent 70%),
+    linear-gradient(rgb(214 227 106 / 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(214 227 106 / 0.02) 1px, transparent 1px);
   background-size:
     100% 100%,
     36px 36px,
@@ -87,8 +87,8 @@ body {
 /* Glowing text for headings and numbers. */
 @utility text-glow {
   text-shadow:
-    0 0 18px rgb(234 255 61 / 0.33),
-    0 0 2px rgb(234 255 61 / 0.48);
+    0 0 18px rgb(214 227 106 / 0.2),
+    0 0 2px rgb(214 227 106 / 0.29);
 }
 
 @media (prefers-reduced-motion: reduce) {

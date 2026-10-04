@@ -58,7 +58,7 @@ export default async function CardPage({params}: PageProps<'/cards/[cveId]'>) {
             </div>
             <Link
               href={`/battle?a=${card.cveId}`}
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-neon px-5 py-2.5 text-sm font-semibold text-ink shadow-[0_0_24px_-6px_rgb(234_255_61/0.42)] hover:bg-neon/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neon"
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-neon px-5 py-2.5 text-sm font-semibold text-ink shadow-[0_0_24px_-6px_rgb(214_227_106/0.25)] hover:bg-neon/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neon"
             >
               Battle this card
             </Link>

@@ -56,7 +56,7 @@ export default async function HomePage() {
           <div className="animate-fade-up mt-7 flex flex-wrap gap-3" style={{animationDelay: '240ms'}}>
             <Link
               href="/cards"
-              className="rounded-full bg-neon px-6 py-3 font-bold text-ink shadow-[0_0_24px_-6px_rgb(234_255_61/0.48)] transition-all hover:scale-105 hover:shadow-[0_0_32px_-2px_rgb(234_255_61/0.54)]"
+              className="rounded-full bg-neon px-6 py-3 font-bold text-ink shadow-[0_0_24px_-6px_rgb(214_227_106/0.29)] transition-all hover:scale-105 hover:shadow-[0_0_32px_-2px_rgb(214_227_106/0.32)]"
             >
               Browse the collection
             </Link>
@@ -123,7 +123,7 @@ export default async function HomePage() {
           <ol className="mt-6 space-y-5">
             {STEPS.map((s, i) => (
               <li key={s.title} className="flex gap-4">
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-neon/50 font-bold text-neon shadow-[0_0_12px_-4px_rgb(234_255_61/0.48)]">
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-neon/50 font-bold text-neon shadow-[0_0_12px_-4px_rgb(214_227_106/0.29)]">
                   {i + 1}
                 </span>
                 <div>
@@ -145,7 +145,7 @@ export default async function HomePage() {
               <li key={r}>
                 <Link
                   href={`/cards?rarity=${r}`}
-                  className="group block rounded-2xl border border-neon/20 bg-ink/60 p-4 transition-all hover:-translate-y-0.5 hover:border-neon/60 hover:shadow-[0_0_20px_-8px_rgb(234_255_61/0.48)]"
+                  className="group block rounded-2xl border border-neon/20 bg-ink/60 p-4 transition-all hover:-translate-y-0.5 hover:border-neon/60 hover:shadow-[0_0_20px_-8px_rgb(214_227_106/0.29)]"
                 >
                   <p className="text-xs text-neon">{RARITY_STYLES[r].stars}</p>
                   <p className="mt-1 font-bold text-zinc-100">{RARITY_STYLES[r].label}</p>

@@ -37,7 +37,7 @@ export function CveCard({card, showDetailsLink = true}: {card: Card; showDetails
             <h3 className="truncate text-xl font-extrabold tracking-tight text-zinc-50">{card.nickname}</h3>
             <div
               aria-label={`Power ${card.cvssScore.toFixed(1)}`}
-              className="flex size-12 shrink-0 flex-col items-center justify-center rounded-full border-2 border-neon/70 bg-ink shadow-[0_0_14px_-2px_rgb(234_255_61/0.42)]"
+              className="flex size-12 shrink-0 flex-col items-center justify-center rounded-full border-2 border-neon/70 bg-ink shadow-[0_0_14px_-2px_rgb(214_227_106/0.25)]"
             >
               <span className="text-glow text-base leading-none font-extrabold text-neon tabular-nums">
                 {card.cvssScore.toFixed(1)}
@@ -59,7 +59,7 @@ export function CveCard({card, showDetailsLink = true}: {card: Card; showDetails
               </p>
               <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/10">
                 <div
-                  className="h-full rounded-full bg-neon shadow-[0_0_10px_rgb(234_255_61/0.48)]"
+                  className="h-full rounded-full bg-neon shadow-[0_0_10px_rgb(214_227_106/0.29)]"
                   style={{width: `${card.cvssScore * 10}%`}}
                 />
               </div>

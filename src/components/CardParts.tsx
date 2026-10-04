@@ -17,7 +17,7 @@ export function SetLabel({set}: {set: CardSetSummary | null}) {
   if (!set) return null
   return (
     <span className="inline-flex items-center gap-1.5 text-xs text-zinc-400">
-      <span aria-hidden className="size-2 rounded-full bg-neon shadow-[0_0_6px_rgb(234_255_61/0.54)]" />
+      <span aria-hidden className="size-2 rounded-full bg-neon shadow-[0_0_6px_rgb(214_227_106/0.32)]" />
       {set.title}
     </span>
   )

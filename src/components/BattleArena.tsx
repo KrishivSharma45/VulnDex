@@ -68,7 +68,7 @@ export function BattleArena({cards, initialA, initialB}: Props) {
           <button
             type="button"
             onClick={randomMatchup}
-            className="rounded-full bg-neon px-5 py-2 font-semibold text-ink shadow-[0_0_24px_-6px_rgb(234_255_61/0.42)] hover:bg-neon/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neon"
+            className="rounded-full bg-neon px-5 py-2 font-semibold text-ink shadow-[0_0_24px_-6px_rgb(214_227_106/0.25)] hover:bg-neon/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neon"
           >
             Random matchup
           </button>
@@ -196,7 +196,7 @@ function Fighter({card, side, result, score}: {card: Card | null; side: 'a' | 'b
         lost ? 'opacity-45 grayscale' : ''
       } ${won ? 'scale-[1.02]' : ''}`}
     >
-      <div aria-hidden className="absolute inset-x-0 top-0 h-1 bg-neon shadow-[0_0_10px_rgb(234_255_61/0.48)]" />
+      <div aria-hidden className="absolute inset-x-0 top-0 h-1 bg-neon shadow-[0_0_10px_rgb(214_227_106/0.29)]" />
       <div className="flex items-start justify-between gap-2">
         <p className="truncate font-mono text-[11px] text-zinc-500 sm:text-xs">{card.cveId}</p>
         <p className="rounded-full bg-white/10 px-2 text-xs font-bold text-zinc-200 tabular-nums" aria-label={`${score} rounds won`}>

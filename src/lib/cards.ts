@@ -7,7 +7,7 @@ export const RARITY_ORDER: Rarity[] = ['legendary', 'epic', 'rare', 'common']
 // stars (and only Legendary pulses), not by a different colour per tier.
 // Full class strings so Tailwind can see them.
 const NEON = {
-  frame: 'border-neon/35 shadow-[0_0_20px_-8px_rgb(234_255_61/0.36)]',
+  frame: 'border-neon/35 shadow-[0_0_20px_-8px_rgb(214_227_106/0.22)]',
   badge: 'bg-neon/10 text-neon ring-neon/35',
   accent: 'text-neon',
   chipOn: 'bg-neon/15 text-neon ring-neon/70',

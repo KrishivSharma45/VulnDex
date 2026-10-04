@@ -39,7 +39,7 @@ export function SiteNav() {
             {l.label}
             <span
               aria-hidden
-              className={`absolute inset-x-3 -bottom-0.5 h-0.5 origin-left rounded-full bg-neon shadow-[0_0_8px_rgb(234_255_61/0.54)] transition-transform duration-300 ${
+              className={`absolute inset-x-3 -bottom-0.5 h-0.5 origin-left rounded-full bg-neon shadow-[0_0_8px_rgb(214_227_106/0.32)] transition-transform duration-300 ${
                 isActive(l.href) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
               }`}
             />
@@ -47,7 +47,7 @@ export function SiteNav() {
         ))}
         <Link
           href="/battle"
-          className="ml-3 rounded-full bg-neon px-5 py-2 text-sm font-bold text-ink shadow-[0_0_20px_-4px_rgb(234_255_61/0.48)] transition-all hover:scale-105 hover:shadow-[0_0_28px_-2px_rgb(234_255_61/0.54)]"
+          className="ml-3 rounded-full bg-neon px-5 py-2 text-sm font-bold text-ink shadow-[0_0_20px_-4px_rgb(214_227_106/0.29)] transition-all hover:scale-105 hover:shadow-[0_0_28px_-2px_rgb(214_227_106/0.32)]"
         >
           Play now
         </Link>
@@ -85,7 +85,7 @@ export function SiteNav() {
               }`}
             >
               {l.label}
-              {isActive(l.href) ? <span aria-hidden className="size-1.5 rounded-full bg-neon shadow-[0_0_8px_rgb(234_255_61/0.6)]" /> : null}
+              {isActive(l.href) ? <span aria-hidden className="size-1.5 rounded-full bg-neon shadow-[0_0_8px_rgb(214_227_106/0.36)]" /> : null}
             </Link>
           ))}
           <Link
@@ -104,9 +104,9 @@ export function SiteNav() {
 /** Two fanned cards in neon. */
 function Logo() {
   return (
-    <svg aria-hidden viewBox="0 0 32 32" className="size-8 drop-shadow-[0_0_6px_rgb(234_255_61/0.42)] transition-transform duration-300 group-hover:-rotate-6">
-      <rect x="5" y="7" width="15" height="21" rx="3" transform="rotate(-12 12.5 17.5)" fill="none" stroke="#eaff3d" strokeOpacity="0.5" strokeWidth="1.5" />
-      <rect x="11" y="4" width="15" height="21" rx="3" transform="rotate(8 18.5 14.5)" fill="#eaff3d" />
+    <svg aria-hidden viewBox="0 0 32 32" className="size-8 drop-shadow-[0_0_6px_rgb(214_227_106/0.25)] transition-transform duration-300 group-hover:-rotate-6">
+      <rect x="5" y="7" width="15" height="21" rx="3" transform="rotate(-12 12.5 17.5)" fill="none" stroke="#d6e36a" strokeOpacity="0.5" strokeWidth="1.5" />
+      <rect x="11" y="4" width="15" height="21" rx="3" transform="rotate(8 18.5 14.5)" fill="#d6e36a" />
       <path d="M18.5 10.5 16 15.5h3l-1.5 4 4-6h-3l1.5-3z" fill="#05080d" transform="rotate(8 18.5 14.5)" />
     </svg>
   )
