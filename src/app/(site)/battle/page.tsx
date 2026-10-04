@@ -31,18 +31,18 @@ export default async function BattlePage({searchParams}: PageProps<'/battle'>) {
 
   return (
     <div className="space-y-8">
-      <header>
-        <p className="font-mono text-xs text-zinc-600">~/battle</p>
-        <h1 className="mt-1 text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">Battle mode</h1>
-        <p className="mt-2 max-w-2xl text-zinc-400">
-          Two CVEs, four rounds: power, age, reach and attack vector. Most rounds wins.
+      <header className="max-w-2xl">
+        <h1 className="text-4xl font-extrabold tracking-tight text-zinc-50 sm:text-5xl">Battle</h1>
+        <p className="mt-3 text-lg text-zinc-400">
+          Pick two cards and they face off over four rounds: power, age, reach and attack vector. Win the most
+          rounds to take the match.
         </p>
       </header>
 
       {cards.length >= 2 ? (
         <BattleArena cards={cards} initialA={param(params.a)} initialB={param(params.b)} />
       ) : (
-        <p className="font-mono text-sm text-zinc-500">Need at least two published cards to battle.</p>
+        <p className="text-zinc-500">You need at least two cards in the collection to battle.</p>
       )}
     </div>
   )

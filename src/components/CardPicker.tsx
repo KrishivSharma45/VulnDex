@@ -55,7 +55,7 @@ export function CardPicker({label, cards, value, onChange, excludeId}: Props) {
 
   return (
     <div className="relative">
-      <label htmlFor={id} className="mb-1.5 block font-mono text-xs text-zinc-500">
+      <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-zinc-300">
         {label}
       </label>
       <input
@@ -68,7 +68,7 @@ export function CardPicker({label, cards, value, onChange, excludeId}: Props) {
         aria-activedescendant={open && options[active] ? `${listId}-${options[active].cveId}` : undefined}
         autoComplete="off"
         spellCheck={false}
-        placeholder={value ? `${value.nickname} · ${value.cveId}` : 'search nickname or CVE…'}
+        placeholder={value ? `${value.nickname} · ${value.cveId}` : 'Search by name or CVE…'}
         value={query}
         onChange={(e) => {
           setQuery(e.target.value)
@@ -78,7 +78,7 @@ export function CardPicker({label, cards, value, onChange, excludeId}: Props) {
         onFocus={() => setOpen(true)}
         onBlur={() => setOpen(false)}
         onKeyDown={onKeyDown}
-        className={`w-full rounded-lg border border-white/10 bg-ink px-3 py-2.5 font-mono text-sm text-zinc-100 focus:border-terminal/60 focus:outline-none ${
+        className={`w-full rounded-xl border border-white/10 bg-panel-raised px-4 py-3 text-sm text-zinc-100 focus:border-neon/60 focus:outline-none ${
           value ? 'placeholder:text-zinc-200' : 'placeholder:text-zinc-600'
         }`}
       />
@@ -111,14 +111,14 @@ export function CardPicker({label, cards, value, onChange, excludeId}: Props) {
                     {c.nickname}
                     <span className="ml-2 font-mono text-xs text-zinc-500">{c.cveId}</span>
                   </span>
-                  <span className={`shrink-0 font-mono text-xs ${RARITY_STYLES[c.rarity].accent}`}>
+                  <span className={`shrink-0 text-xs font-bold ${RARITY_STYLES[c.rarity].accent}`}>
                     {c.cvssScore.toFixed(1)}
                   </span>
                 </li>
               )
             })
           ) : (
-            <li className="px-3 py-2 font-mono text-xs text-zinc-500">no matching CVE</li>
+            <li className="px-3 py-2 text-sm text-zinc-500">No matching card</li>
           )}
         </ul>
       ) : null}

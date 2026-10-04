@@ -7,26 +7,58 @@
 }
 
 @theme {
-  --color-ink: #05070a;
-  --color-panel: #0b1015;
-  --color-terminal: #3dff8f;
+  /* Page and surfaces. */
+  --color-ink: #05080d;
+  --color-panel: #0b1118;
+  --color-panel-raised: #111a24;
 
-  --animate-legendary: legendary-glow 3.2s ease-in-out infinite;
-  --animate-blink: blink 1.1s steps(1) infinite;
+  /* The one accent colour for the whole site. Change it here to re-theme everything. */
+  --color-neon: #eaff3d;
 
-  @keyframes legendary-glow {
+  --animate-neon-pulse: neon-pulse 3.2s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.5s ease-out both;
+  --animate-menu-in: menu-in 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes neon-pulse {
     0%,
     100% {
-      box-shadow: 0 0 16px -4px rgb(251 191 36 / 0.45);
+      box-shadow: 0 0 14px -4px rgb(234 255 61 / 0.27);
     }
     50% {
-      box-shadow: 0 0 34px -2px rgb(251 191 36 / 0.8);
+      box-shadow: 0 0 32px -2px rgb(234 255 61 / 0.48);
     }
   }
 
-  @keyframes blink {
-    50% {
+  @keyframes fade-up {
+    from {
       opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }
@@ -40,17 +72,31 @@ body {
   color: var(--color-zinc-300);
 }
 
-/* Faint terminal grid behind the site */
+/* Neon grid behind the site, fading out towards the bottom, with a soft glow up top. */
 @utility bg-grid {
   background-image:
-    linear-gradient(rgb(61 255 143 / 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(61 255 143 / 0.035) 1px, transparent 1px);
-  background-size: 32px 32px;
+    radial-gradient(900px 420px at 50% -10%, rgb(234 255 61 / 0.06), transparent 70%),
+    linear-gradient(rgb(234 255 61 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(234 255 61 / 0.035) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    36px 36px,
+    36px 36px;
+}
+
+/* Glowing text for headings and numbers. */
+@utility text-glow {
+  text-shadow:
+    0 0 18px rgb(234 255 61 / 0.33),
+    0 0 2px rgb(234 255 61 / 0.48);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-legendary,
-  .animate-blink {
-    animation: none;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

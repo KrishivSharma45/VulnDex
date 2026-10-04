@@ -37,15 +37,15 @@ export default async function CardPage({params}: PageProps<'/cards/[cveId]'>) {
   const r = RARITY_STYLES[card.rarity]
 
   return (
-    <div className="space-y-8">
-      <Link href="/cards" className="font-mono text-xs text-zinc-500 hover:text-terminal">
-        ← cd ../cards
+    <div className="space-y-12">
+      <Link href="/cards" className="inline-flex text-sm font-medium text-zinc-400 hover:text-zinc-100">
+        ← Back to the collection
       </Link>
 
       <div className="grid gap-10 lg:grid-cols-[20rem_minmax(0,1fr)] lg:gap-14">
         <div className="lg:sticky lg:top-24 lg:self-start">
           <CveCard card={card} showDetailsLink={false} />
-          <p className="mt-3 text-center font-mono text-[11px] text-zinc-600">click the card to flip it</p>
+          <p className="mt-3 text-center text-xs text-zinc-500">Tap the card to flip it</p>
         </div>
 
         <article className="min-w-0 space-y-8">
@@ -58,31 +58,31 @@ export default async function CardPage({params}: PageProps<'/cards/[cveId]'>) {
             </div>
             <Link
               href={`/battle?a=${card.cveId}`}
-              className="mt-5 inline-flex items-center gap-2 rounded-lg border border-terminal/50 px-4 py-2 font-mono text-sm text-terminal hover:bg-terminal/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terminal"
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-neon px-5 py-2.5 text-sm font-semibold text-ink shadow-[0_0_24px_-6px_rgb(234_255_61/0.42)] hover:bg-neon/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neon"
             >
-              ⚔ battle this card
+              Battle this card
             </Link>
           </header>
 
-          <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/5 bg-white/5 font-mono sm:grid-cols-4">
-            <Stat label="power (cvss)">
-              <span className={`text-2xl font-bold ${r.accent}`}>{card.cvssScore.toFixed(1)}</span>
+          <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-4">
+            <Stat label="Power (CVSS)">
+              <span className={`text-2xl font-extrabold ${r.accent}`}>{card.cvssScore.toFixed(1)}</span>
             </Stat>
-            <Stat label="severity">
+            <Stat label="Severity">
               <span className="capitalize">{card.severity}</span>
             </Stat>
-            <Stat label="vector">{ATTACK_VECTOR_LABELS[card.attackVector] ?? card.attackVector}</Stat>
-            <Stat label="year">{card.year}</Stat>
+            <Stat label="Attack vector">{ATTACK_VECTOR_LABELS[card.attackVector] ?? card.attackVector}</Stat>
+            <Stat label="Year">{card.year}</Stat>
           </dl>
 
           {card.attackTypes?.length ? (
-            <Section title="attack_types">
+            <Section title="Attack types">
               <AttackChips types={card.attackTypes} />
             </Section>
           ) : null}
 
           {card.story?.length ? (
-            <Section title="story">
+            <Section title="Story">
               <div className="prose prose-invert max-w-none prose-p:leading-relaxed">
                 <PortableText value={card.story} />
               </div>
@@ -90,27 +90,27 @@ export default async function CardPage({params}: PageProps<'/cards/[cveId]'>) {
           ) : null}
 
           {card.summary ? (
-            <Section title="official_summary">
-              <blockquote className="border-l-2 border-terminal/40 pl-4 text-sm leading-relaxed text-zinc-400">
+            <Section title="Official summary">
+              <blockquote className="rounded-xl border border-white/10 bg-panel/80 p-4 text-sm leading-relaxed text-zinc-400">
                 {card.summary}
               </blockquote>
               <a
                 href={nvdHref(card.cveId)}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-2 inline-block font-mono text-xs text-terminal hover:underline"
+                className="mt-3 inline-block text-sm font-medium text-neon hover:underline"
               >
-                view on NVD ↗
+                Read the full entry on NVD ↗
               </a>
             </Section>
           ) : null}
 
-          <Section title="affected_software">
+          <Section title="Affected software">
             <SoftwareList items={card.affectedSoftware} />
           </Section>
 
           {card.patchInfo ? (
-            <Section title="patch">
+            <Section title="How it was fixed">
               <p className="leading-relaxed text-zinc-300">{card.patchInfo}</p>
             </Section>
           ) : null}
@@ -123,8 +123,8 @@ export default async function CardPage({params}: PageProps<'/cards/[cveId]'>) {
 function Stat({label, children}: {label: string; children: React.ReactNode}) {
   return (
     <div className="bg-panel px-4 py-3">
-      <dt className="text-[10px] tracking-widest text-zinc-500 uppercase">{label}</dt>
-      <dd className="mt-1 text-zinc-200">{children}</dd>
+      <dt className="text-xs font-medium text-zinc-500">{label}</dt>
+      <dd className="mt-1 text-lg font-semibold text-zinc-100">{children}</dd>
     </div>
   )
 }
@@ -132,8 +132,8 @@ function Stat({label, children}: {label: string; children: React.ReactNode}) {
 function Section({title, children}: {title: string; children: React.ReactNode}) {
   return (
     <section>
-      <h2 className="mb-3 font-mono text-xs text-terminal">
-        <span className="text-zinc-600">{'//'}</span> {title}
+      <h2 className="mb-3 text-lg font-bold text-zinc-100">
+        {title}
       </h2>
       {children}
     </section>

@@ -6,9 +6,9 @@ export function RarityBadge({rarity, className = ''}: {rarity: Rarity; className
   const s = RARITY_STYLES[rarity]
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-mono text-[10px] font-semibold tracking-widest uppercase ring-1 ${s.badge} ${className}`}
+      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold tracking-wide ring-1 ${s.badge} ${className}`}
     >
-      {rarity === 'legendary' ? '★' : '◆'} {s.label}
+      <span aria-hidden>{s.stars}</span> {s.label}
     </span>
   )
 }
@@ -17,11 +17,7 @@ export function SetLabel({set}: {set: CardSetSummary | null}) {
   if (!set) return null
   return (
     <span className="inline-flex items-center gap-1.5 text-xs text-zinc-400">
-      <span
-        aria-hidden
-        className="size-2 rounded-full"
-        style={{backgroundColor: set.themeColor ?? '#71717a'}}
-      />
+      <span aria-hidden className="size-2 rounded-full bg-neon shadow-[0_0_6px_rgb(234_255_61/0.54)]" />
       {set.title}
     </span>
   )
@@ -34,8 +30,8 @@ export function AttackChips({types, small}: {types: AttackTypeSummary[] | null; 
       {types.map((t) => (
         <li
           key={t._id}
-          className={`rounded border border-terminal/25 bg-terminal/5 font-mono text-terminal/90 ${
-            small ? 'px-1.5 py-0.5 text-[10px]' : 'px-2 py-1 text-xs'
+          className={`rounded-full bg-white/[0.06] font-medium text-zinc-300 ring-1 ring-white/10 ${
+            small ? 'px-2 py-0.5 text-[10px]' : 'px-3 py-1 text-xs'
           }`}
         >
           {t.name}

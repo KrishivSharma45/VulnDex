@@ -98,44 +98,64 @@ export function CardBrowser({cards, sets, attackTypes, initialParams}: Props) {
 
   const isFiltered =
     filters.rarities.length || filters.sets.length || filters.attacks.length || filters.from !== minYear || filters.to !== maxYear
+  const activeChips = filters.rarities.length + filters.sets.length + filters.attacks.length
+
+  // On phones the chip filters collapse behind a toggle so the cards aren't pushed below the fold.
+  const [showFilters, setShowFilters] = useState(false)
 
   return (
     <div className="space-y-8">
-      <section aria-label="Filters" className="space-y-4 rounded-xl border border-white/5 bg-panel/80 p-4 sm:p-5">
-        <FilterRow label="rarity">
-          {RARITY_ORDER.map((r) => (
-            <Chip
-              key={r}
-              on={filters.rarities.includes(r)}
-              onClass={RARITY_STYLES[r].chipOn}
-              onClick={() => toggle('rarities', r)}
-            >
-              {RARITY_STYLES[r].label}
-            </Chip>
-          ))}
-        </FilterRow>
+      <section aria-label="Filters" className="space-y-4 rounded-2xl border border-white/10 bg-panel/80 p-5 shadow-xl shadow-black/20 sm:p-6">
+        <button
+          type="button"
+          aria-expanded={showFilters}
+          aria-controls="filter-chips"
+          onClick={() => setShowFilters((v) => !v)}
+          className="flex w-full items-center justify-between text-sm font-semibold text-zinc-200 sm:hidden"
+        >
+          <span>
+            Filters
+            {activeChips ? <span className="ml-2 rounded-full bg-neon/20 px-2 py-0.5 text-xs text-neon">{activeChips} active</span> : null}
+          </span>
+          <span aria-hidden className={`transition-transform ${showFilters ? 'rotate-180' : ''}`}>▾</span>
+        </button>
 
-        <FilterRow label="set">
-          {sets.map((s) => (
-            <Chip key={s._id} on={filters.sets.includes(s._id)} onClick={() => toggle('sets', s._id)}>
-              <span aria-hidden className="size-2 rounded-full" style={{backgroundColor: s.themeColor ?? '#71717a'}} />
-              {s.title}
-            </Chip>
-          ))}
-        </FilterRow>
+        <div id="filter-chips" className={`space-y-4 ${showFilters ? '' : 'hidden'} sm:block`}>
+          <FilterRow label="Rarity">
+            {RARITY_ORDER.map((r) => (
+              <Chip
+                key={r}
+                on={filters.rarities.includes(r)}
+                onClass={RARITY_STYLES[r].chipOn}
+                onClick={() => toggle('rarities', r)}
+              >
+                {RARITY_STYLES[r].label}
+              </Chip>
+            ))}
+          </FilterRow>
 
-        <FilterRow label="attack">
-          {attackTypes.map((a) => (
-            <Chip key={a._id} on={filters.attacks.includes(a._id)} onClick={() => toggle('attacks', a._id)}>
-              {a.name}
-            </Chip>
-          ))}
-        </FilterRow>
+          <FilterRow label="Set">
+            {sets.map((s) => (
+              <Chip key={s._id} on={filters.sets.includes(s._id)} onClick={() => toggle('sets', s._id)}>
+                <span aria-hidden className="size-2 rounded-full bg-neon" />
+                {s.title}
+              </Chip>
+            ))}
+          </FilterRow>
+
+          <FilterRow label="Attack type">
+            {attackTypes.map((a) => (
+              <Chip key={a._id} on={filters.attacks.includes(a._id)} onClick={() => toggle('attacks', a._id)}>
+                {a.name}
+              </Chip>
+            ))}
+          </FilterRow>
+        </div>
 
         <div className="flex flex-wrap items-end gap-x-6 gap-y-3 border-t border-white/5 pt-4">
           <fieldset className="flex items-center gap-2">
             <legend className="sr-only">Year range</legend>
-            <span className="w-14 font-mono text-xs text-zinc-500">year</span>
+            <span className="w-24 text-sm font-medium text-zinc-400">Year</span>
             <Select
               label="From year"
               value={filters.from}
@@ -152,7 +172,7 @@ export function CardBrowser({cards, sets, attackTypes, initialParams}: Props) {
           </fieldset>
 
           <div className="flex items-center gap-2">
-            <span className="font-mono text-xs text-zinc-500">sort</span>
+            <span className="text-sm font-medium text-zinc-400">Sort by</span>
             <Select
               label="Sort cards"
               value={filters.sort}
@@ -161,17 +181,17 @@ export function CardBrowser({cards, sets, attackTypes, initialParams}: Props) {
             />
           </div>
 
-          <div className="ml-auto flex items-center gap-3 font-mono text-xs">
+          <div className="ml-auto flex items-center gap-4 text-sm">
             <p aria-live="polite" className="text-zinc-500">
-              {visible.length}/{cards.length} cards
+              Showing {visible.length} of {cards.length} cards
             </p>
             {isFiltered ? (
               <button
                 type="button"
                 onClick={() => setFilters({...defaults, sort: filters.sort})}
-                className="text-terminal hover:underline"
+                className="font-medium text-neon hover:underline"
               >
-                reset
+                Clear filters
               </button>
             ) : null}
           </div>
@@ -180,21 +200,22 @@ export function CardBrowser({cards, sets, attackTypes, initialParams}: Props) {
 
       {visible.length ? (
         <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {visible.map((card) => (
-            <li key={card._id}>
+          {visible.map((card, i) => (
+            <li key={card._id} className="animate-fade-up" style={{animationDelay: `${Math.min(i, 8) * 60}ms`}}>
               <CveCard card={card} />
             </li>
           ))}
         </ul>
       ) : (
-        <div className="rounded-xl border border-dashed border-white/10 p-10 text-center font-mono text-sm text-zinc-500">
-          <p>0 results. No known bugs match those filters.</p>
+        <div className="rounded-2xl border border-dashed border-white/10 p-12 text-center text-zinc-400">
+          <p className="font-medium text-zinc-200">No cards match those filters.</p>
+          <p className="mt-1 text-sm">Try widening the year range or removing a filter.</p>
           <button
             type="button"
             onClick={() => setFilters(defaults)}
-            className="mt-3 text-terminal hover:underline"
+            className="mt-4 font-medium text-neon hover:underline"
           >
-            reset filters
+            Clear filters
           </button>
         </div>
       )}
@@ -204,8 +225,8 @@ export function CardBrowser({cards, sets, attackTypes, initialParams}: Props) {
 
 function FilterRow({label, children}: {label: string; children: React.ReactNode}) {
   return (
-    <div role="group" aria-label={`Filter by ${label}`} className="flex flex-col gap-2 sm:flex-row sm:items-center">
-      <span className="w-14 shrink-0 font-mono text-xs text-zinc-500">{label}</span>
+    <div role="group" aria-label={`Filter by ${label.toLowerCase()}`} className="flex flex-col gap-2 sm:flex-row sm:items-center">
+      <span className="w-24 shrink-0 text-sm font-medium text-zinc-400">{label}</span>
       <div className="flex flex-wrap gap-1.5">{children}</div>
     </div>
   )
@@ -214,7 +235,7 @@ function FilterRow({label, children}: {label: string; children: React.ReactNode}
 function Chip({
   on,
   onClick,
-  onClass = 'bg-terminal/15 text-terminal ring-terminal/60',
+  onClass = 'bg-neon/15 text-neon ring-neon/60',
   children,
 }: {
   on: boolean
@@ -227,7 +248,7 @@ function Chip({
       type="button"
       aria-pressed={on}
       onClick={onClick}
-      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs ring-1 transition-colors ${
+      className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm ring-1 transition-colors ${
         on ? onClass : 'text-zinc-400 ring-white/10 hover:text-zinc-200 hover:ring-white/25'
       }`}
     >
@@ -252,7 +273,7 @@ function Select({
       aria-label={label}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="rounded-md border border-white/10 bg-ink px-2 py-1.5 font-mono text-xs text-zinc-200 focus-visible:outline-2 focus-visible:outline-terminal"
+      className="rounded-lg border border-white/10 bg-panel-raised px-3 py-1.5 text-sm text-zinc-200 focus-visible:outline-2 focus-visible:outline-neon"
     >
       {options.map(([v, l]) => (
         <option key={v} value={v}>

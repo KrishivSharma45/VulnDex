@@ -3,39 +3,24 @@ import type {Rarity} from './cvss'
 
 export const RARITY_ORDER: Rarity[] = ['legendary', 'epic', 'rare', 'common']
 
+// One colour for every card: the site's neon accent. Rarity is told apart by
+// stars (and only Legendary pulses), not by a different colour per tier.
 // Full class strings so Tailwind can see them.
+const NEON = {
+  frame: 'border-neon/35 shadow-[0_0_20px_-8px_rgb(234_255_61/0.36)]',
+  badge: 'bg-neon/10 text-neon ring-neon/35',
+  accent: 'text-neon',
+  chipOn: 'bg-neon/15 text-neon ring-neon/70',
+}
+
 export const RARITY_STYLES: Record<
   Rarity,
-  {label: string; frame: string; badge: string; accent: string; chipOn: string}
+  {label: string; stars: string; frame: string; badge: string; accent: string; chipOn: string}
 > = {
-  legendary: {
-    label: 'Legendary',
-    frame: 'border-amber-400/80 animate-legendary',
-    badge: 'bg-amber-400/15 text-amber-300 ring-amber-400/60',
-    accent: 'text-amber-300',
-    chipOn: 'bg-amber-400/20 text-amber-200 ring-amber-400/70',
-  },
-  epic: {
-    label: 'Epic',
-    frame: 'border-purple-500/80 shadow-[0_0_22px_-6px_rgb(168_85_247/0.6)]',
-    badge: 'bg-purple-500/15 text-purple-300 ring-purple-500/60',
-    accent: 'text-purple-300',
-    chipOn: 'bg-purple-500/20 text-purple-200 ring-purple-500/70',
-  },
-  rare: {
-    label: 'Rare',
-    frame: 'border-blue-500/80 shadow-[0_0_18px_-8px_rgb(59_130_246/0.6)]',
-    badge: 'bg-blue-500/15 text-blue-300 ring-blue-500/60',
-    accent: 'text-blue-300',
-    chipOn: 'bg-blue-500/20 text-blue-200 ring-blue-500/70',
-  },
-  common: {
-    label: 'Common',
-    frame: 'border-zinc-600',
-    badge: 'bg-zinc-500/15 text-zinc-300 ring-zinc-500/60',
-    accent: 'text-zinc-300',
-    chipOn: 'bg-zinc-500/25 text-zinc-100 ring-zinc-400/70',
-  },
+  legendary: {...NEON, label: 'Legendary', stars: '★★★★', frame: 'border-neon/70 animate-neon-pulse'},
+  epic: {...NEON, label: 'Epic', stars: '★★★'},
+  rare: {...NEON, label: 'Rare', stars: '★★'},
+  common: {...NEON, label: 'Common', stars: '★', frame: 'border-neon/25'},
 }
 
 export const ATTACK_VECTOR_LABELS: Record<AttackVector, string> = {

@@ -58,27 +58,27 @@ export function BattleArena({cards, initialA, initialB}: Props) {
     <div className="space-y-8">
       <section aria-label="Choose fighters" className="rounded-xl border border-white/5 bg-panel/80 p-4 sm:p-5">
         <div className="grid gap-4 sm:grid-cols-[1fr_auto_1fr] sm:items-end">
-          <CardPicker label="player_1" cards={cards} value={a} onChange={setA} excludeId={b?.cveId} />
-          <span aria-hidden className="hidden pb-2.5 text-center font-mono text-sm font-bold text-terminal sm:block">
+          <CardPicker label="Player 1" cards={cards} value={a} onChange={setA} excludeId={b?.cveId} />
+          <span aria-hidden className="hidden pb-2.5 text-center text-sm font-extrabold text-zinc-500 sm:block">
             vs
           </span>
-          <CardPicker label="player_2" cards={cards} value={b} onChange={setB} excludeId={a?.cveId} />
+          <CardPicker label="Player 2" cards={cards} value={b} onChange={setB} excludeId={a?.cveId} />
         </div>
-        <div className="mt-4 flex flex-wrap items-center gap-2 font-mono text-xs">
+        <div className="mt-5 flex flex-wrap items-center gap-2 text-sm">
           <button
             type="button"
             onClick={randomMatchup}
-            className="rounded-lg bg-terminal px-4 py-2 font-semibold text-ink hover:bg-terminal/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terminal"
+            className="rounded-full bg-neon px-5 py-2 font-semibold text-ink shadow-[0_0_24px_-6px_rgb(234_255_61/0.42)] hover:bg-neon/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neon"
           >
-            ⚄ random matchup
+            Random matchup
           </button>
           {a && !b ? (
             <button
               type="button"
               onClick={() => setB(randomCard(a.cveId))}
-              className="rounded-lg border border-terminal/40 px-4 py-2 text-terminal hover:bg-terminal/10"
+              className="rounded-full border border-neon/40 px-5 py-2 font-medium text-neon hover:bg-neon/10"
             >
-              random challenger for {a.nickname}
+              Random opponent for {a.nickname}
             </button>
           ) : null}
           {a && b ? (
@@ -86,16 +86,16 @@ export function BattleArena({cards, initialA, initialB}: Props) {
               <button
                 type="button"
                 onClick={() => setFight((f) => f + 1)}
-                className="rounded-lg border border-white/10 px-4 py-2 text-zinc-300 hover:border-white/25"
+                className="rounded-full border border-white/10 px-5 py-2 font-medium text-zinc-300 hover:border-white/25"
               >
-                ↻ rematch
+                Rematch
               </button>
               <button
                 type="button"
                 onClick={copyLink}
-                className="rounded-lg border border-white/10 px-4 py-2 text-zinc-300 hover:border-white/25"
+                className="rounded-full border border-white/10 px-5 py-2 font-medium text-zinc-300 hover:border-white/25"
               >
-                {copied ? '✓ copied' : '⧉ copy battle link'}
+                {copied ? 'Link copied ✓' : 'Copy battle link'}
               </button>
             </>
           ) : null}
@@ -106,8 +106,8 @@ export function BattleArena({cards, initialA, initialB}: Props) {
         // Keyed so each new matchup or rematch remounts and replays the reveal from round 1.
         <BattleStage key={`${a?.cveId}|${b?.cveId}|${fight}`} a={a} b={b} />
       ) : (
-        <p className="rounded-xl border border-dashed border-white/10 p-10 text-center font-mono text-sm text-zinc-500">
-          Pick two CVEs, or roll a random matchup.
+        <p className="rounded-2xl border border-dashed border-white/10 p-12 text-center text-zinc-400">
+          Pick two cards to battle, or hit Random matchup.
         </p>
       )}
     </div>
@@ -153,22 +153,23 @@ function BattleStage({a, b}: {a: Card | null; b: Card | null}) {
           ))}
 
           <div
-            className={`rounded-xl border border-terminal/30 bg-terminal/5 p-5 transition-all duration-500 motion-reduce:transition-none ${
+            className={`rounded-2xl border border-neon/30 bg-gradient-to-br from-neon/15 to-transparent p-6 transition-all duration-500 motion-reduce:transition-none ${
               done ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-2 opacity-0'
             }`}
             aria-hidden={!done}
           >
-            <p className="font-mono text-xs tracking-widest text-terminal uppercase">
+            <p className="text-sm font-semibold text-neon">
               {result.winner === 'draw'
-                ? `draw · ${result.score.a}–${result.score.b}`
-                : `winner · ${result.score.a}–${result.score.b}`}
+                ? `It's a draw · ${result.score.a}–${result.score.b}`
+                : `Winner · ${result.score.a}–${result.score.b}`}
             </p>
             <p className="mt-1 text-2xl font-black tracking-tight text-zinc-50 sm:text-3xl">
               {result.winner === 'draw' ? 'Nobody patches in time.' : (result.winner === 'a' ? a : b).nickname}
             </p>
-            {result.tiebreak ? <p className="mt-1 font-mono text-xs text-zinc-500">{result.tiebreak}</p> : null}
-            <p className="mt-4 font-mono text-sm leading-relaxed text-zinc-300">
-              <span className="text-zinc-600">[battle.log]</span> {result.log}
+            {result.tiebreak ? <p className="mt-1 text-sm text-zinc-500">{result.tiebreak}</p> : null}
+            <p className="mt-4 text-base leading-relaxed text-zinc-300">
+              <span className="font-semibold text-zinc-100">Battle report: </span>
+              {result.log}
             </p>
           </div>
         </section>
@@ -181,8 +182,8 @@ function BattleStage({a, b}: {a: Card | null; b: Card | null}) {
 function Fighter({card, side, result, score}: {card: Card | null; side: 'a' | 'b'; result: Side | null; score: number}) {
   if (!card) {
     return (
-      <div className="flex min-h-40 items-center justify-center rounded-xl border border-dashed border-white/10 p-4 text-center font-mono text-xs text-zinc-600">
-        awaiting challenger…
+      <div className="flex min-h-40 items-center justify-center rounded-2xl border border-dashed border-white/10 p-4 text-center text-sm text-zinc-500">
+        Waiting for an opponent…
       </div>
     )
   }
@@ -195,23 +196,23 @@ function Fighter({card, side, result, score}: {card: Card | null; side: 'a' | 'b
         lost ? 'opacity-45 grayscale' : ''
       } ${won ? 'scale-[1.02]' : ''}`}
     >
-      <div aria-hidden className="absolute inset-x-0 top-0 h-1" style={{backgroundColor: card.set?.themeColor ?? '#3f3f46'}} />
+      <div aria-hidden className="absolute inset-x-0 top-0 h-1 bg-neon shadow-[0_0_10px_rgb(234_255_61/0.48)]" />
       <div className="flex items-start justify-between gap-2">
-        <p className="truncate font-mono text-[10px] text-zinc-500 sm:text-xs">{card.cveId}</p>
-        <p className="font-mono text-xs font-bold text-zinc-300 tabular-nums" aria-label={`${score} rounds won`}>
+        <p className="truncate font-mono text-[11px] text-zinc-500 sm:text-xs">{card.cveId}</p>
+        <p className="rounded-full bg-white/10 px-2 text-xs font-bold text-zinc-200 tabular-nums" aria-label={`${score} rounds won`}>
           {score}
         </p>
       </div>
-      <p className={`mt-2 font-mono text-4xl leading-none font-bold tabular-nums sm:text-6xl ${r.accent}`}>
+      <p className={`mt-2 text-4xl leading-none font-extrabold tracking-tight tabular-nums sm:text-6xl ${r.accent}`}>
         {card.cvssScore.toFixed(1)}
       </p>
       <h2 className="mt-2 truncate text-lg font-bold tracking-tight text-zinc-50 sm:text-2xl">{card.nickname}</h2>
       <div className="mt-2 flex flex-wrap items-center gap-2">
         <RarityBadge rarity={card.rarity} />
-        {won ? <span className="font-mono text-[10px] font-bold tracking-widest text-terminal">★ WINNER</span> : null}
+        {won ? <span className="rounded-full bg-neon/15 px-2 py-0.5 text-[11px] font-bold text-neon ring-1 ring-neon/60">★ Winner</span> : null}
       </div>
-      <Link href={cardHref(card.cveId)} className="mt-3 inline-block font-mono text-[11px] text-zinc-500 hover:text-terminal">
-        dossier →
+      <Link href={cardHref(card.cveId)} className="mt-3 inline-block text-xs font-medium text-zinc-400 hover:text-neon">
+        View card →
       </Link>
     </article>
   )
@@ -223,8 +224,8 @@ function RoundRow({round, index, shown}: {round: Round; index: number; shown: bo
     const draw = round.winner === 'draw'
     return (
       <p
-        className={`font-mono text-sm tabular-nums sm:text-base ${side === 'b' ? 'text-right' : ''} ${
-          win ? 'font-bold text-terminal' : draw ? 'text-zinc-300' : 'text-zinc-600 line-through decoration-zinc-700'
+        className={`text-base font-semibold tabular-nums sm:text-lg ${side === 'b' ? 'text-right' : ''} ${
+          win ? 'text-neon' : draw ? 'text-zinc-300' : 'text-zinc-600 line-through decoration-zinc-700'
         }`}
       >
         {side === 'a' && win ? '▲ ' : ''}
@@ -242,10 +243,10 @@ function RoundRow({round, index, shown}: {round: Round; index: number; shown: bo
     >
       {cell('a')}
       <div className="text-center">
-        <p className="font-mono text-[10px] text-zinc-600">round {index + 1}</p>
+        <p className="text-[11px] font-medium text-zinc-500">Round {index + 1}</p>
         <p className="text-sm font-bold text-zinc-100">{round.label}</p>
-        <p className="hidden font-mono text-[10px] text-zinc-500 sm:block">{round.rule}</p>
-        {round.winner === 'draw' ? <p className="font-mono text-[10px] text-zinc-400">draw</p> : null}
+        <p className="hidden text-xs text-zinc-500 sm:block">{round.rule}</p>
+        {round.winner === 'draw' ? <p className="text-xs font-medium text-zinc-400">Draw</p> : null}
       </div>
       {cell('b')}
     </div>
