@@ -136,9 +136,9 @@ export default async function AboutPage() {
 
 function Fact({value, label}: {value: string; label: string}) {
   return (
-    <div className="rounded-2xl border border-neon/20 bg-panel/80 px-4 py-3">
+    <div className="rounded-2xl border border-neon/20 bg-panel/80 px-3 py-3 sm:px-4">
       <dt className="text-xs text-zinc-500">{label}</dt>
-      <dd className="text-2xl font-extrabold text-neon tabular-nums">{value}</dd>
+      <dd className="text-lg font-extrabold whitespace-nowrap sm:text-2xl text-neon tabular-nums">{value}</dd>
     </div>
   )
 }
