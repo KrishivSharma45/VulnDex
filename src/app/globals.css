@@ -17,7 +17,6 @@
 
   --animate-neon-pulse: neon-pulse 3.2s ease-in-out infinite;
   --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-  --animate-fade-in: fade-in 0.5s ease-out both;
   --animate-menu-in: menu-in 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
 
   @keyframes neon-pulse {
@@ -40,16 +39,6 @@
       transform: translateY(0);
     }
   }
-
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
 
   @keyframes menu-in {
     from {
