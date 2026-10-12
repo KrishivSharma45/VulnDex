@@ -5,10 +5,10 @@ import {PortableText} from 'next-sanity'
 
 import {AttackChips, RarityBadge, SetLabel, SoftwareList} from '@/components/CardParts'
 import {CveCard} from '@/components/CveCard'
-import {ATTACK_VECTOR_LABELS, RARITY_STYLES, nvdHref} from '@/lib/cards'
+import {ATTACK_VECTOR_LABELS, RARITY_STYLES, cardHref, nvdHref} from '@/lib/cards'
 import type {Card} from '@/lib/types'
 import {sanityFetch} from '@/sanity/lib/client'
-import {CARD_BY_ID_QUERY, CARD_IDS_QUERY} from '@/sanity/lib/queries'
+import {CARD_BY_ID_QUERY, CARD_IDS_QUERY, CARD_NAV_QUERY} from '@/sanity/lib/queries'
 
 export const revalidate = 60
 
@@ -30,11 +30,19 @@ export async function generateMetadata({params}: PageProps<'/cards/[cveId]'>): P
   }
 }
 
+type NavCard = {cveId: string; nickname: string}
+
 export default async function CardPage({params}: PageProps<'/cards/[cveId]'>) {
-  const card = await getCard((await params).cveId)
+  const {cveId} = await params
+  const [card, order] = await Promise.all([getCard(cveId), sanityFetch<NavCard[]>(CARD_NAV_QUERY)])
   if (!card) notFound()
 
   const r = RARITY_STYLES[card.rarity]
+
+  // Previous / next in collection order, wrapping around at the ends.
+  const i = order.findIndex((c) => c.cveId === card.cveId)
+  const prev = i >= 0 && order.length > 1 ? order[(i - 1 + order.length) % order.length] : null
+  const next = i >= 0 && order.length > 1 ? order[(i + 1) % order.length] : null
 
   return (
     <div className="space-y-12">
@@ -116,7 +124,30 @@ export default async function CardPage({params}: PageProps<'/cards/[cveId]'>) {
           ) : null}
         </article>
       </div>
+
+      {prev && next ? (
+        <nav aria-label="More cards" className="grid gap-3 border-t border-white/10 pt-8 sm:grid-cols-2">
+          <CardNavLink card={prev} direction="prev" />
+          <CardNavLink card={next} direction="next" />
+        </nav>
+      ) : null}
     </div>
+  )
+}
+
+function CardNavLink({card, direction}: {card: NavCard; direction: 'prev' | 'next'}) {
+  const isNext = direction === 'next'
+  return (
+    <Link
+      href={cardHref(card.cveId)}
+      className={`group rounded-2xl border border-white/10 bg-panel/80 p-4 transition-all hover:-translate-y-0.5 hover:border-neon/40 ${
+        isNext ? 'sm:text-right' : ''
+      }`}
+    >
+      <p className="text-xs font-medium text-zinc-500">{isNext ? 'Next card →' : '← Previous card'}</p>
+      <p className="mt-1 font-bold text-zinc-100 transition-colors group-hover:text-neon">{card.nickname}</p>
+      <p className="font-mono text-xs text-zinc-500">{card.cveId}</p>
+    </Link>
   )
 }
 

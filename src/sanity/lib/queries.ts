@@ -23,3 +23,6 @@ export const CARDS_QUERY = `*[${PUBLISHED_CARD}] | order(cvssScore desc, year de
 export const CARD_BY_ID_QUERY = `*[${PUBLISHED_CARD} && cveId == $cveId][0] ${CARD_PROJECTION}`
 
 export const CARD_IDS_QUERY = `*[${PUBLISHED_CARD}].cveId`
+
+/** Published cards in collection order (power, then year), for previous / next links. */
+export const CARD_NAV_QUERY = `*[${PUBLISHED_CARD}] | order(cvssScore desc, year desc){cveId, nickname}`
