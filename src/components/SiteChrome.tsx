@@ -12,11 +12,21 @@ const FOOTER_LINKS = [
 export function SiteChrome({children}: {children: React.ReactNode}) {
   return (
     <div className="bg-grid flex min-h-full flex-1 flex-col">
+      {/* Hidden until focused: lets keyboard and screen-reader users jump past the nav. */}
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-neon focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-ink"
+      >
+        Skip to content
+      </a>
+
       <header className="sticky top-0 z-30 border-b border-neon/10 bg-ink/70 backdrop-blur-xl">
         <SiteNav />
       </header>
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10">{children}</main>
+      <main id="main" tabIndex={-1} className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 outline-none sm:px-6 sm:py-10">
+        {children}
+      </main>
 
       <footer className="border-t border-neon/10 bg-ink/60">
         <div className="mx-auto grid max-w-6xl gap-6 px-4 py-8 text-sm sm:grid-cols-[1fr_auto] sm:items-center sm:px-6">
